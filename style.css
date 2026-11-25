@@ -1,0 +1,210 @@
+:root {
+  --page-bg: #eef0f3;
+  --page-text: #14161a;
+  --page-muted: #5b6270;
+  --frame: #1b1c1f;
+  --frame-edge: #3a3b40;
+  --screen-bg: #ffffff;
+  --screen-text: #111111;
+
+  --phone-w: 390px;
+  --phone-h: 844px;
+  --bezel: 12px;
+  --radius: 56px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--page-bg);
+  background-image: radial-gradient(circle at 70% 30%, #ffffff 0%, var(--page-bg) 60%);
+  color: var(--page-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Side-layout ---------- */
+.stage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 96px;
+  padding: 40px 16px;
+}
+
+.intro { max-width: 320px; }
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--page-muted);
+  margin-bottom: 12px;
+}
+.intro h1 { font-size: 40px; line-height: 1.1; font-weight: 700; margin-bottom: 16px; }
+.lead { font-size: 17px; line-height: 1.5; color: var(--page-muted); }
+
+/* ---------- Telefonen ---------- */
+.phone {
+  position: relative;
+  flex-shrink: 0;
+  width: calc(var(--phone-w) + var(--bezel) * 2);
+  height: calc(var(--phone-h) + var(--bezel) * 2);
+  padding: var(--bezel);
+  border-radius: calc(var(--radius) + var(--bezel));
+  background: var(--frame);
+  box-shadow:
+    0 0 0 2px var(--frame-edge),
+    0 0 0 4px #0d0d0f,
+    0 40px 80px -20px rgba(20, 22, 30, .45),
+    0 20px 40px -20px rgba(20, 22, 30, .3);
+}
+
+/* Sideknapper */
+.phone-btn {
+  position: absolute;
+  width: 4px;
+  background: #2a2b2f;
+  border-radius: 2px;
+}
+.phone-btn--action   { left: -6px;  top: 120px; height: 32px; }
+.phone-btn--vol-up   { left: -6px;  top: 180px; height: 60px; }
+.phone-btn--vol-down { left: -6px;  top: 255px; height: 60px; }
+.phone-btn--power    { right: -6px; top: 210px; height: 96px; }
+
+.screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--screen-bg);
+  color: var(--screen-text);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Statuslinje */
+.status-bar {
+  position: relative;
+  height: 54px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px 0 44px;
+  font-size: 16px;
+  font-weight: 600;
+  z-index: 10;
+}
+.status-icons { display: flex; align-items: center; gap: 6px; }
+.status-icons svg { fill: currentColor; }
+
+.dynamic-island {
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 124px;
+  height: 36px;
+  border-radius: 20px;
+  background: #000;
+}
+
+.battery {
+  position: relative;
+  width: 26px;
+  height: 12px;
+  border: 1.5px solid currentColor;
+  border-radius: 4px;
+  opacity: .9;
+  padding: 1.5px;
+}
+.battery::after {
+  content: "";
+  position: absolute;
+  right: -4px;
+  top: 3px;
+  width: 2px;
+  height: 4px;
+  border-radius: 0 1px 1px 0;
+  background: currentColor;
+}
+.battery-level {
+  display: block;
+  width: 80%;
+  height: 100%;
+  border-radius: 1.5px;
+  background: currentColor;
+}
+
+/* App-området – her ligger indholdet */
+.app {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+.app::-webkit-scrollbar { display: none; }
+
+.home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 134px;
+  height: 5px;
+  border-radius: 3px;
+  background: #111;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Midlertidig placeholder */
+.placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+  gap: 12px;
+  color: #6b7280;
+}
+.placeholder-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #d1d5db, #9ca3af);
+  margin-bottom: 8px;
+}
+.placeholder h2 { font-size: 20px; color: #111; }
+.placeholder p { font-size: 14px; line-height: 1.5; }
+.placeholder code { background: #f3f4f6; padding: 1px 5px; border-radius: 4px; }
+
+/* ---------- Responsivt ---------- */
+
+/* Mindre skærme: skjul intro-teksten */
+@media (max-width: 900px) {
+  .intro { display: none; }
+}
+
+/* På en rigtig mobil: vis appen i fuld skærm uden ramme */
+@media (max-width: 500px) {
+  .stage { padding: 0; gap: 0; display: block; }
+  .phone {
+    width: 100%;
+    height: 100dvh;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: var(--screen-bg);
+    zoom: 1;
+  }
+  .phone-btn, .dynamic-island, .status-bar, .home-indicator { display: none; }
+  .screen { border-radius: 0; padding-top: env(safe-area-inset-top); }
+}
